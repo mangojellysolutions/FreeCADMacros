@@ -1,0 +1,30 @@
+timer.stop()
+from PySide import QtCore
+import subprocess
+
+x=0
+speed = 0.5
+##Gui.ActiveDocument.ActiveView.saveImage('C:/temp/test.png',1656,783,'Current')
+count = 0;
+
+def save():
+	global count
+	saveDir = 'C:/temp/'
+	print(f'{count:08}' + '.jpg')
+	Gui.ActiveDocument.ActiveView.saveImage(saveDir + f'{count:08}' + '.jpg',800,600,'White')
+	count+=1
+
+
+def update():
+	global x, speed,saveDir
+	x +=speed
+	FreeCAD.getDocument("ouputtoavi").getObject("Compound").Placement = App.Placement(App.Vector(9,12+x,0),App.Rotation(App.Vector(0,0,1),0))
+	save()
+	if (count > 5) :
+		timer.stop()
+		subprocess.run(["c:\\temp\\aviout.bat"])
+		print('Check output directory for video')
+
+timer = QtCore.QTimer()
+timer.timeout.connect(update)
+timer.start(1)

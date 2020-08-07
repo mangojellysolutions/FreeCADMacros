@@ -1,0 +1,4 @@
+from PySide import QtGui
+inches = QtGui.QInputDialog.getText(None, "Enter inch(es) to be converted to mm(s):", "Inch(es):")[0]
+mm = float(inches) * 25.4
+FreeCAD.Console.PrintMessage( str(inches) + ' inch(es) in mm(s) = ' + str(mm) + '\n' )
